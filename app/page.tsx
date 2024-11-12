@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <div className="center">
-      <h1 className="text-3xl text-brand">My drive - the only safe drive</h1>
+      <h1 className="h1">My drive - the only safe drive</h1>
     </div>
   );
 }

@@ -2,12 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-    .center {
-        @apply flex h-screen items-center justify-center bg-amber-100;
+@layer base{
+    *{
+        @apply scroll-smooth;
     }
 
-    .h1 {
-        @apply text-[34px] leading-[42px] font-bold;
+    body{
+        @apply bg-white text-dark-200 min-h-screen;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar{
+        width: 6px;
+        height: 3px;
+        border-radius: 50px;
+    }
+
+    .custom-scrollbar ::-webkit-scrollbar-track{
+        background: transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb{
+        background: #e5e7eb;
+        border-radius: 50px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover{
+        background: #fa7275;
+    }
+
+    /* Remove scrollbar */
+    .remove-scrollbar::-webkit-scrollbar{
+        width: 0;
+        height: 0;
+        border-radius: 0;
+    }
+
+    .remove-scrollbar::-webkit-scrollbar-track{
+        background: transparent;
+    }
+    .remove-scrollbar::-webkit-scrollbar-thumb{
+        background: transparent;
+        border-radius: 0;
+    }
+
+    .remove-scrollbar::-webkit-scrollbar-thumb:hover{
+        background: transparent;
+    }
+
+    .recharts-responsive-container{
+        height: initial !important;
     }
 }
+

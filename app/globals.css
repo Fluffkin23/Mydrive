@@ -150,4 +150,7 @@
       @apply cursor-pointer !important;
     }
   }
+  :root {
+    --radius: 0.5rem;
+  }
 }

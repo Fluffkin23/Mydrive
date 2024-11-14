@@ -8,11 +8,12 @@
 // 5. Return the user’s accountId that will be used to complete the log
 // 7. Verify OTP and authenticate to login
 
-import { createAdminClient } from "@/lib/appwrite";
+import { createAdminClient, createSessionClient } from "@/lib/appwrite";
 import { appWriteConfig } from "@/lib/appwrite/config";
 import { ID, Query } from "node-appwrite";
 import { parseStringify } from "@/lib/utils";
 import { cookies } from "next/headers";
+import { avatarPlaceHolder } from "@/constants";
 
 const getUserByEmail = async (email: string) => {
   const { databases } = await createAdminClient();
@@ -58,8 +59,7 @@ export const createAccount = async ({
       {
         fullName,
         email,
-        avatar:
-          "https://in.pinterest.com/pin/placeholder-clipart-png-images-user-avatar-placeholder-white-blue-profile-picture-placeholder-white-png-image-for-free-download--727331408586770494/",
+        avatar: avatarPlaceHolder,
         accountId,
       },
     );
@@ -87,4 +87,16 @@ export const verifySecret = async ({
   } catch (error) {
     handleError(error, "Failed to verify an OTP");
   }
+};
+
+export const getCurrentUser = async () => {
+  const { databases, account } = await createSessionClient();
+  const result = await account.get();
+  const user = await databases.listDocuments(
+    appWriteConfig.databaseId,
+    appWriteConfig.usersCollectionId,
+    [Query.equal("accountId", result.$id)],
+  );
+  if (user.total <= 0) return null;
+  return parseStringify(user.documents[0]);
 };

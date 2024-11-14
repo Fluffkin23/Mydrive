@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,6 +18,25 @@ import {
 } from "@/components/ui/input-otp";
 
 const OtpModal = () => {
+  const [isOpen, setIsOpen] = useState(true);
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      // Call API to verify OTP
+    } catch (error) {
+      console.log("Failed to verify the OTP", error);
+    }
+    setIsLoading(false);
+  };
+
+  const handleResetOtp = asyn () => {
+    // Call API to verify OTP
+
+  };
   return (
     <AlertDialog>
       <AlertDialogTrigger>Open</AlertDialogTrigger>
@@ -42,7 +61,6 @@ const OtpModal = () => {
             <InputOTPSlot index={5} />
           </InputOTPGroup>
         </InputOTP>
-
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction>Continue</AlertDialogAction>

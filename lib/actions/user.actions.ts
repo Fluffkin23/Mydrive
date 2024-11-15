@@ -47,7 +47,7 @@ export const createAccount = async ({
   fullName: string;
   email: string;
 }) => {
-  const existingUser = getUserByEmail(email);
+  const existingUser = await getUserByEmail(email);
   const accountId = await sendEmailOTP({ email });
   if (!accountId) throw new Error("Failed to send an OTP");
   if (!existingUser) {
@@ -91,12 +91,23 @@ export const verifySecret = async ({
 
 export const getCurrentUser = async () => {
   const { databases, account } = await createSessionClient();
+  console.log("Session client initialized:", { databases, account });
+
   const result = await account.get();
+  console.log("Account details fetched:", result);
+
   const user = await databases.listDocuments(
     appWriteConfig.databaseId,
     appWriteConfig.usersCollectionId,
     [Query.equal("accountId", result.$id)],
   );
+  console.log("Database query result:", user);
+
   if (user.total <= 0) return null;
+  console.warn(
+    "No matching user found in the database for accountId:",
+    result.$id,
+  );
+
   return parseStringify(user.documents[0]);
 };

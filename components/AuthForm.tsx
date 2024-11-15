@@ -20,6 +20,7 @@ import { createAccount } from "@/lib/actions/user.actions";
 import OtpModal from "@/components/OTPModal";
 
 type FormType = "sign-in" | "sign-up";
+
 const authFormSchema = (formType: FormType) => {
   return z.object({
     email: z.string().email(),

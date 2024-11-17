@@ -1,6 +1,13 @@
+import { SearchParams } from "next/dist/server/request/search-params";
+
 export interface UploadFileProps {
   file: File;
   ownerId: string;
   accountId: string;
   path: string;
+}
+
+declare interface SearchParamProps {
+  params?: Promise<SegmentParams>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }

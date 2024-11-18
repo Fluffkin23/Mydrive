@@ -91,26 +91,23 @@ export const verifySecret = async ({
 };
 
 export const getCurrentUser = async () => {
-  const { databases, account } = await createSessionClient();
-  console.log("Session client initialized:", { databases, account });
+  try {
+    const { databases, account } = await createSessionClient();
 
-  const result = await account.get();
-  console.log("Account details fetched:", result);
+    const result = await account.get();
 
-  const user = await databases.listDocuments(
-    appWriteConfig.databaseId,
-    appWriteConfig.usersCollectionId,
-    [Query.equal("accountId", result.$id)],
-  );
-  console.log("Database query result:", user);
+    const user = await databases.listDocuments(
+      appWriteConfig.databaseId,
+      appWriteConfig.usersCollectionId,
+      [Query.equal("accountId", result.$id)],
+    );
 
-  if (user.total <= 0) return null;
-  console.warn(
-    "No matching user found in the database for accountId:",
-    result.$id,
-  );
+    if (user.total <= 0) return null;
 
-  return parseStringify(user.documents[0]);
+    return parseStringify(user.documents[0]);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const signOutUser = async () => {

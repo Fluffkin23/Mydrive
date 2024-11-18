@@ -12,6 +12,9 @@ const Header = ({
   userId: string;
   accountId: string;
 }) => {
+  console.log("User ID passed to Header:", userId);
+  console.log("Account ID passed to Header:", accountId);
+
   return (
     <header className="header">
       <Search />

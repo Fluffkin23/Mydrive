@@ -17,6 +17,8 @@ interface Props {
 }
 
 const FileUploader = ({ ownerId, accountId, className }: Props) => {
+  console.log("Owner ID passed to FileUploader:", ownerId);
+
   const path = usePathname();
   const { toast } = useToast();
   const [files, setFiles] = useState<File[]>([]);
@@ -50,6 +52,7 @@ const FileUploader = ({ ownerId, accountId, className }: Props) => {
           },
         );
       });
+
       await Promise.all(uploadPromises);
     },
     [ownerId, accountId, path],

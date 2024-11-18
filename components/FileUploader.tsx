@@ -52,6 +52,7 @@ const FileUploader = ({ ownerId, accountId, className }: Props) => {
           },
         );
       });
+      console.log("Owner ID being passed to uploadFile:", ownerId);
 
       await Promise.all(uploadPromises);
     },

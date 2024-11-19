@@ -27,6 +27,7 @@ import { Button } from "@/components/ui/button";
 import { rename } from "node:fs";
 import { renameFile } from "@/lib/actions/file.actions";
 import { usePathname } from "next/navigation";
+import { FileDetails } from "@/components/ActionsModalContent";
 
 const ActionDropDown = ({ file }: { file: Models.Document }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -76,10 +77,7 @@ const ActionDropDown = ({ file }: { file: Models.Document }) => {
               onChange={(e) => setName(e.target.value)}
             />
           )}
-          <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </DialogDescription>
+          {value && "details" && <FileDetails file={file} />}
         </DialogHeader>
         {["rename", "delete", "share"].includes(value) && (
           <DialogFooter className="flex flex-col gap-3 md:flex-row">

@@ -1,6 +1,7 @@
 "use server";
 
 import {
+  DeleteFileProps,
   RenameFileProps,
   UpdateFileUsersProps,
   UploadFileProps,
@@ -169,5 +170,30 @@ export const updateFileUsers = async ({
     return parseStringify(updatedFile);
   } catch (error) {
     handleError(error, "Failed to update the  users");
+  }
+};
+
+export const deleteFile = async ({
+  fileId,
+  bucketFileId,
+  path,
+}: DeleteFileProps) => {
+  const { databases, storage } = await createAdminClient();
+
+  try {
+    const deletedFile = await databases.deleteDocument(
+      appWriteConfig.databaseId,
+      appWriteConfig.filesCollectionId,
+      fileId,
+    );
+
+    if (deletedFile) {
+      await storage.deleteFile(appWriteConfig.bucketId, bucketFileId);
+    }
+
+    revalidatePath(path);
+    return parseStringify({ status: "success" });
+  } catch (error) {
+    handleError(error, "Failed to delete the  file");
   }
 };

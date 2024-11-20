@@ -1,34 +1,46 @@
 import React from "react";
 import { SearchParams } from "next/dist/server/request/search-params";
-import {SearchParamProps} from "@/types";
+import { SearchParamProps } from "@/types";
 import Sort from "@/components/Sort";
-import {getFiles} from "@/lib/actions/file.actions";
-import {Models} from "node-appwrite";
+import { getFiles } from "@/lib/actions/file.actions";
+import { Models } from "node-appwrite";
 import Card from "@/components/Card";
+import { getFileType, getFileTypesParams } from "@/lib/utils";
+import { FileType } from "next/dist/lib/file-exists";
 
 const Page = async ({ params }: SearchParamProps) => {
-  const type = ((await params) ? .type as string) || "";
+  const type = ((await params)?.type as string) || "";
 
-  const files = await getFiles();
+  const types = getFileTypesParams(type) as FileType[];
 
-  return <div className="page-container">
-    <section className=" w-full">
-      <h1 className=" h1 capitalize"> {type}</h1>
-      <div className=" total-size-section">
-        <p className="body-1">
-          Total: <span className="h5">0 MB</span>
-        </p>
-        <div className="sort-container">
-          <p className="body-1 hidden sm:block text-light-200">Sort by:</p>
-          <Sort/>
+  const files = await getFiles({ types });
+
+  return (
+    <div className="page-container">
+      <section className=" w-full">
+        <h1 className=" h1 capitalize"> {type}</h1>
+        <div className=" total-size-section">
+          <p className="body-1">
+            Total: <span className="h5">0 MB</span>
+          </p>
+          <div className="sort-container">
+            <p className="body-1 hidden sm:block text-light-200">Sort by:</p>
+            <Sort />
+          </div>
         </div>
-      </div>
-    </section>
-    { /* Render the files */}
-    {files.total > 0 ? ( <section className="file-list">{files.documents.map((file:Models.Document) => (
-        <Card key ={file.$id} file={file}/>
-    ))}</section>) : <p className="empty-list"> No files uploaded</p>}
-  </div>;
+      </section>
+      {/* Render the files */}
+      {files.total > 0 ? (
+        <section className="file-list">
+          {files.documents.map((file: Models.Document) => (
+            <Card key={file.$id} file={file} />
+          ))}
+        </section>
+      ) : (
+        <p className="empty-list"> No files uploaded</p>
+      )}
+    </div>
+  );
 };
 
 export default Page;

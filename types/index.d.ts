@@ -1,4 +1,5 @@
 import { SearchParams } from "next/dist/server/request/search-params";
+import { FileType } from "next/dist/lib/file-exists";
 
 export interface UploadFileProps {
   file: File;
@@ -35,4 +36,11 @@ declare interface DeleteFileProps {
   fileId: string;
   bucketFileId: string;
   path: string;
+}
+
+declare interface GetFilesProps {
+  types: FileType[];
+  searchText?: string;
+  sort?: string;
+  limit?: number;
 }

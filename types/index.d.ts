@@ -1,5 +1,5 @@
 import { SearchParams } from "next/dist/server/request/search-params";
-import { FileType } from "next/dist/lib/file-exists";
+declare type FileType = "document" | "image" | "video" | "audio" | "other";
 
 export interface UploadFileProps {
   file: File;

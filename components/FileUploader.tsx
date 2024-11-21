@@ -85,6 +85,7 @@ const FileUploader = ({ ownerId, accountId, className }: Props) => {
           <h4 className="h4 text-light-100">Uploading</h4>
           {files.map((file, index) => {
             const { type, extension } = getFileType(file.name);
+
             return (
               <li
                 key={`${file.name}-${index}`}
@@ -92,6 +93,7 @@ const FileUploader = ({ ownerId, accountId, className }: Props) => {
               >
                 <div className="flex items-center gap-3">
                   <Thumbnail
+                    // @ts-ignore
                     type={type}
                     extension={extension}
                     url={convertFileToUrl(file)}

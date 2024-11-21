@@ -1,5 +1,4 @@
 import React from "react";
-import { SearchParams } from "next/dist/server/request/search-params";
 import { SearchParamProps } from "@/types";
 import Sort from "@/components/Sort";
 import { getFiles } from "@/lib/actions/file.actions";

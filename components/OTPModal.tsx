@@ -51,7 +51,7 @@ const OtpModal = ({
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent className="shad-alert-dialog">
-        <AlertDialogHeader className="relative flex-justify-center">
+        <AlertDialogHeader className="relative flex justify-center">
           <AlertDialogTitle className="h2 text-center">
             Enter your OTP
             <Image

@@ -15,6 +15,7 @@ const Page = async ({ searchParams, params }: SearchParamProps) => {
 
   const types = getFileTypesParams(type) as FileType[];
 
+  // @ts-ignore
   const files = await getFiles({ types, searchText, sort });
 
   return (
